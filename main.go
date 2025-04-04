@@ -29,7 +29,7 @@ func getSuccessRate() float64 {
 
 func main() {
 	pref := tele.Settings{
-		Token:     os.Getenv("TOKEN"),
+		Token:     "6951087608:AAGfVdrNduwKwnvUoE5JG_DbPKlc0OQLG9s",
 		Poller:    &tele.LongPoller{Timeout: 10 * time.Second},
 		ParseMode: tele.ModeMarkdownV2,
 	}
