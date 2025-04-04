@@ -49,7 +49,8 @@ func main() {
 	)
 
 	b.Handle("/start", func(c tele.Context) error {
-		return c.Send("Hello", selector)
+		winRate := getSuccessRate()
+		return c.Send(fmt.Sprintf(msg, winsCount, losesCount, winRate), selector)
 	})
 
 	b.Handle(&btnWin, func(c tele.Context) error {
