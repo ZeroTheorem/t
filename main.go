@@ -9,12 +9,12 @@ import (
 )
 
 const msg = `
-Wins: **%v**; Loses: **%v**
+Wins: <b>%v</b>; Loses: <b>%v</b>
 
-Win rate: **%v**
+Win rate: <b>%.2f%%</b>
 `
 
-var winsCount = 22
+var winsCount = 24
 var losesCount = 5
 
 // Функция для вычисления процента успеха
@@ -30,7 +30,7 @@ func main() {
 	pref := tele.Settings{
 		Token:     "6951087608:AAGfVdrNduwKwnvUoE5JG_DbPKlc0OQLG9s",
 		Poller:    &tele.LongPoller{Timeout: 10 * time.Second},
-		ParseMode: tele.ModeMarkdownV2,
+		ParseMode: tele.ModeHTML,
 	}
 
 	b, err := tele.NewBot(pref)
@@ -44,23 +44,24 @@ func main() {
 	btnLose := selector.Data("Lose", "L")
 
 	selector.Inline(
-		selector.Row(btnWin, btnLose),
+		selector.Row(btnWin),
+		selector.Row(btnLose),
 	)
 
 	b.Handle("/start", func(c tele.Context) error {
-		return c.Send("Hello!", selector)
+		return c.Send("Hello", selector)
 	})
 
 	b.Handle(&btnWin, func(c tele.Context) error {
 		winsCount++
 		winRate := getSuccessRate()
-		return c.Send(fmt.Sprintf(msg, winsCount, losesCount, winRate))
+		return c.Send(fmt.Sprintf(msg, winsCount, losesCount, winRate), selector)
 	})
 
 	b.Handle(&btnLose, func(c tele.Context) error {
 		losesCount++
 		winRate := getSuccessRate()
-		return c.Send(fmt.Sprintf(msg, winsCount, losesCount, winRate))
+		return c.Send(fmt.Sprintf(msg, winsCount, losesCount, winRate), selector)
 	})
 	b.Start()
 }
