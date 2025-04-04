@@ -14,8 +14,8 @@ Wins: <b>%v</b>; Loses: <b>%v</b>
 Win rate: <b>%.2f%%</b>
 `
 
-var winsCount = 24
-var losesCount = 5
+var winsCount = 44
+var losesCount = 16
 
 // Функция для вычисления процента успеха
 func getSuccessRate() float64 {
